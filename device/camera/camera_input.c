@@ -19,7 +19,7 @@ static int camera_configure_input_v4l2(camera_t *camera)
   camera->camera = device_v4l2_open(camera->name, path);
   if (!camera->camera) {
     LOG_INFO(camera, "Listing available v4l2 devices:");
-    system("v4l2-ctl --list-devices");
+    (void)system("v4l2-ctl --list-devices");
     return -1;
   }
 

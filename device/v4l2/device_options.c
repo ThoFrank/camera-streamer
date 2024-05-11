@@ -258,7 +258,7 @@ int v4l2_device_dump_options2(device_t *dev, device_option_fn fn, void *opaque)
     };
 
     struct v4l2_ext_controls ext_controls = {
-      .ctrl_class = 0,
+      // .ctrl_class = 0, // is a union with .which
       .which = V4L2_CTRL_WHICH_CUR_VAL,
       .count = 1,
       .controls = &ext_control

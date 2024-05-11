@@ -74,7 +74,6 @@ static void print_help(option_t *options, const char *cmd)
   printf("$ %s \\\n", cmd);
   for (int i = 0; options[i].name; i++) {
     option_t *option = &options[i];
-    int len = 0;
 
     if (option->value_list) {
       char *string = option->value_list;
@@ -84,20 +83,20 @@ static void print_help(option_t *options, const char *cmd)
         continue;
 
       while ((token = strsep(&string, OPTION_VALUE_LIST_SEP)) != NULL) {
-        len = printf("  --%s=", option->name);
+        printf("  --%s=", option->name);
         printf("%s \\\n", token);
       }
     } else if (option->value_string) {
-      len += printf("  --%s=", option->name);
+      printf("  --%s=", option->name);
       printf(option->format, option->value_string);
       printf(" \\\n");
     } else {
       bool found = false;
-      len += printf("  --%s=", option->name);
+      printf("  --%s=", option->name);
       if (option->value_mapping) {
         const char *name = opt_value_to_string(option->value_mapping, *option->value_uint, NULL);
         if (name) {
-          len += printf("%s", name);
+          printf("%s", name);
           found = true;
         }
       }

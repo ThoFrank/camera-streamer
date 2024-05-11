@@ -68,7 +68,7 @@ struct ClientTrackData
     uint32_t elapsedTimestamp = rtpConfig->secondsToTimestamp(currentTime_s);
 
     sender->rtpConfig->timestamp = sender->rtpConfig->startTimestamp + elapsedTimestamp;
-    auto reportElapsedTimestamp = sender->rtpConfig->timestamp - sender->previousReportedTimestamp;
+    auto reportElapsedTimestamp = sender->rtpConfig->timestamp - sender->previousReportedTimestamp();
     if (sender->rtpConfig->timestampToSeconds(reportElapsedTimestamp) > 1) {
       sender->setNeedsToReport();
     }

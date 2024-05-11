@@ -27,7 +27,7 @@ static void device_list_read_formats(int fd, device_info_formats_t *formats, enu
 
 static bool device_list_read_dev(device_info_t *info, const char *name)
 {
-  asprintf(&info->path, "/dev/%s", name);
+  (void)asprintf(&info->path, "/dev/%s", name);
 
   int fd = open(info->path, O_RDWR|O_NONBLOCK);
   if (fd < 0) {
