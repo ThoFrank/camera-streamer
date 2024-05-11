@@ -17,21 +17,20 @@ clangStdenv.mkDerivation rec {
 
   src = ./.;
 
-  buildInputs = [
-    pkg-config
-    which
-    nlohmann_json
-    unixtools.xxd
-    cmake
-    openssl
-  ];
   nativeBuildInputs = [
     makeWrapper
+    pkg-config
+    which
+    cmake
+  ];
+  buildInputs = [
+    nlohmann_json
+    unixtools.xxd
+    openssl
   ];
 
   GIT_VERSION = version;
   GIT_REVISION = "bc23191";
-  DESTDIR = "$out";
 
   patchPhase = ''
     # sed -i 's/\[N_FDS\]/\[\(unsigned int\)N_FDS\]/g' device/links.c
@@ -49,7 +48,6 @@ clangStdenv.mkDerivation rec {
     install camera-streamer $out/bin/${pname}
   '';
   NIX_CFLAGS_COMPILE = [
-    # "-Wno-unused-but-set-variable"
     "-Wno-error"
   ];
   postFixup = ''

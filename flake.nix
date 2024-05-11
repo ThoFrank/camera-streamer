@@ -3,13 +3,18 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs }: {
-
-    packages.x86_64-linux.hello = nixpkgs.legacyPackages.x86_64-linux.callPackage ./default.nix {};
-
-    packages.x86_64-linux.default = self.packages.x86_64-linux.hello;
-
-  };
+  outputs = { self, nixpkgs, flake-utils }: (
+    flake-utils.lib.eachSystem 
+    (with flake-utils.lib.system; [
+      x86_64-linux
+      aarch64-linux
+    ]) 
+    (system: {
+      packages.camera-streamer = nixpkgs.legacyPackages."${system}".callPackage ./default.nix {};
+      packages.default = self.packages."${system}".camera-streamer;
+    })
+  );
 }
